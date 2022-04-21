@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:20.04
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 PATH=/opt/bin:/opt/conda/bin:$PATH
 
@@ -31,11 +31,16 @@ RUN /bin/bash -c "source activate clair3" && \
     conda install -c conda-forge pypy3.6 -y && \
     pypy3 -m ensurepip && \
     pypy3 -m pip install mpmath==1.2.1 && \
-    pip install tensorflow-cpu==2.2.0 && \
+    pip install tensorflow-gpu==2.2.0 && \
     pip install tensorflow-addons==0.11.2 tables==3.6.1 && \
-    conda install -c anaconda pigz==2.4 -y && \
-    conda install -c anaconda cffi==1.14.4 -y && \
-    conda install -c conda-forge parallel=20191122 zstd=1.4.4 -y && \
+    conda install -c anaconda pigz==2.4 -y
+    
+RUN /bin/bash -c "source activate clair3" && \
+    pip install  cffi==1.14.4  && \
+    #conda install -c anaconda cffi==1.14.4 -y && \
+    #conda install -c conda-forge parallel=20191122 zstd=1.4.4 -y && \
+    #conda install  parallel=20191122 zstd=1.4.4 -y && \
+    #  apt install  -y parallel zstd  && \
     conda install -c conda-forge -c bioconda samtools=1.10 -y && \
     conda install -c conda-forge -c bioconda whatshap=1.0 -y && \
     conda install -c conda-forge xz zlib bzip2 -y && \
