@@ -5,6 +5,7 @@ WHATSHAP=`which whatshap`                         # e.g. whatshap
 PARALLEL=`which parallel`                         # e.g. parallel
 SAMTOOLS=`which samtools`                         # e.g. samtools
 TABIX=`which tabix`    
+PYTHON3=`which python`
 
 # Input parameters
 PLATFORM="ilmn"                       # e.g. {ont, hifi, ilmn}
@@ -13,6 +14,7 @@ OUTPUT_DIR="output"					       # e.g. output
 ALL_UNPHASED_BAM_FILE_PATH=(
 "/data/data_HG00X/HG001.hiseqx.pcr-free.40x.dedup.grch38.bam"
 )
+
 
 # Each line represents a sample, a sample can be specified multiple times to allow downsampling
 ALL_SAMPLE=(
@@ -50,10 +52,10 @@ CHR_PREFIX="chr"
 
 # array of chromosomes (do not include "chr"-prefix)
 CHR=(1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22)
-
 # Number of threads to be used
-THREADS=56
-
+THREADS=28
+THREADS_LOW=$((${THREADS}*3/4))
+if [[ ${THREADS_LOW} < 1 ]]; then THREADS_LOW=1; fi
 # The number of chucks to be divided into for parallel processing
 chunk_num=15
 CHUNK_LIST=`seq 1 ${chunk_num}`
